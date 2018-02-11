@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ThreeTileRenderer.Editor
 {
-    public static class PreviewHelper
+    public static class TilePreviewRenderHelper
     {
         #region Members
         /// <summary>
@@ -83,9 +83,8 @@ namespace ThreeTileRenderer.Editor
         private static void RenderInPreviewRenderUtility(TileAsset tile, Vector2 angle, float distance)
         {   
             PreviewRenderUtilityHelpers.Instance.DrawMesh(tile, Matrix4x4.identity, PreviewMaterial, 0);
-            PreviewRenderUtilityHelpers.Instance.camera.transform.position = Vector2.zero;
             PreviewRenderUtilityHelpers.Instance.camera.transform.rotation = Quaternion.Euler(new Vector3(-angle.y, -angle.x, 0));
-            PreviewRenderUtilityHelpers.Instance.camera.transform.position = PreviewRenderUtilityHelpers.Instance.camera.transform.forward * -distance;
+            PreviewRenderUtilityHelpers.Instance.camera.transform.position = Vector3.up * 1.5f + PreviewRenderUtilityHelpers.Instance.camera.transform.forward * -distance;
             PreviewRenderUtilityHelpers.Instance.camera.Render();
         }
 
@@ -99,7 +98,7 @@ namespace ThreeTileRenderer.Editor
         /// <param name="samplingIterations">The amount of slices used to raymarch in the Texture3D</param>
         /// <param name="density">A linear factor to multiply the Texture3D with</param>
         /// <returns>A Texture with the preview</returns>
-        public static Texture RenderTexture3DPreview(this TileAsset asset, Rect rect, Vector2 angle, float distance)
+        public static Texture RenderPreview(this TileAsset asset, Rect rect, Vector2 angle, float distance)
         {
             PreviewRenderUtilityHelpers.Instance.BeginPreview(rect, BackgroundGuiStyle);
             RenderInPreviewRenderUtility(asset, angle, distance);
