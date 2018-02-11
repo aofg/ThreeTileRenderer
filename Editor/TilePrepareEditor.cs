@@ -96,8 +96,12 @@ namespace ThreeTileRenderer.Editor
 				var meshOffset = worldVertices.Count;
 				worldVertices.AddRange(vertices.Select(v => worldMatrix.MultiplyPoint(v)));
 				resultColors.AddRange(mesh.colors);
-				resultNormals.AddRange(mesh.normals);
-				resultTangents.AddRange(mesh.tangents);
+				resultNormals.AddRange(mesh.normals.Select(n => worldMatrix.rotation * n));
+				resultTangents.AddRange(mesh.tangents.Select(t =>
+				{
+					var v3 = worldMatrix.rotation * t;
+					return new Vector4(v3.x, v3.y, v3.z, t.w);
+				}));
 				resultUvs.AddRange(mesh.uv);
 				
 				for (var triangleIndex = 0; triangleIndex < triangles.Length; triangleIndex+=3)

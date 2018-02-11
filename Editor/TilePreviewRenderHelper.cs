@@ -30,7 +30,7 @@ namespace ThreeTileRenderer.Editor
             {
                 if (_previewMaterial == null)
                 {
-                    _previewMaterial = new Material(Shader.Find("Standard"));
+                    _previewMaterial = new Material(Shader.Find("Legacy Shaders/Diffuse"));
                 }
 
                 return _previewMaterial;
